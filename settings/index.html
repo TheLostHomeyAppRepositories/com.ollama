@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+    ></script>
+  </head>
+  <body>
+    <fieldset class="homey-form-fieldset">
+      <legend class="homey-form-legend">Ollama instance</legend>
+
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="ip">IP address</label>
+        <input class="homey-form-input" id="ip" type="text" value="">
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="port">Port</label>
+        <input class="homey-form-input" id="port" type="number" value="11434" placeholder="11434">
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="prompt">System prompt</label>
+        <textarea class="homey-form-textarea" id="prompt">You are an Assistant for Homey Pro. Users send messages and you should generate a response. Always respond friendly and give detailed responses.</textarea>
+      </div>
+    </fieldset>
+    <p style="color: green; display: none;" id="success">Settings saved!</p>
+
+    <button id="save" class="homey-button-primary-full">Save</button>
+
+    <script type="text/javascript">
+      // a method named 'onHomeyReady' must be present in your code
+      function onHomeyReady(Homey) {
+        // Tell Homey we're ready to be displayed
+        Homey.ready();
+
+        const ipElement = document.getElementById("ip");
+        const portElement = document.getElementById("port");
+        const promptElement = document.getElementById("prompt");
+        const saveElement = document.getElementById("save");
+        const successfulElement = document.getElementById("success");
+
+        successfulElement.style.display = 'none';
+
+        Homey.get("ip", function (err, ip) {
+          if (err) return Homey.alert(err);
+          if (!ip) return;
+          ipElement.value = ip;
+        });
+
+        Homey.get("port", function (err, port) {
+          if (err) return Homey.alert(err);
+          if (!port) return;
+          portElement.value = port;
+        });
+
+        Homey.get("systemPrompt", function (err, systemPrompt) {
+          if (err) return Homey.alert(err);
+          if (!systemPrompt) return;
+          promptElement.value = systemPrompt;
+        });
+
+        saveElement.addEventListener("click", function (e) {
+          saveElement.className = 'homey-button-primary-full is-loading';
+          saveElement.textContent = 'Saving';
+          Homey.set("ip", ipElement.value, function (err) {
+            if (err) {
+                saveElement.className = 'homey-button-primary-full';
+                saveElement.textContent = 'Save';
+               return Homey.alert(err);
+            }
+            if (!ipElement.value) {
+                saveElement.className = 'homey-button-primary-full';
+                saveElement.textContent = 'Save';
+                return Homey.alert('Please enter the IP address of your Ollama instance.');
+            }
+          });
+          if (!portElement.value) {
+            portElement.value = '11434';
+          }
+          Homey.set("port", portElement.value, function (err) {
+            if (err) {
+                saveElement.className = 'homey-button-primary-full';
+                saveElement.textContent = 'Save';
+               return Homey.alert(err);
+            }
+          });
+          Homey.set("systemPrompt", promptElement.value, function (err) {
+            if (!promptElement.value) {
+                saveElement.className = 'homey-button-primary-full';
+                saveElement.textContent = 'Save';
+                return Homey.alert('Please enter a system prompt.');
+            }
+            if (err) {
+                saveElement.className = 'homey-button-primary-full';
+                saveElement.textContent = 'Save';
+               return Homey.alert(err);
+            }
+            saveElement.className = 'homey-button-primary-full';
+            saveElement.textContent = 'Save';
+            successfulElement.style.display = 'block';
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

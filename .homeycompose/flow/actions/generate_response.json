@@ -1,0 +1,26 @@
+{
+  "title": { "en": "Generate response from Ollama using model ... and prompt ..." },
+  "titleFormatted": { "en": "Generate response from Ollama using model [[model]] and prompt [[prompt]]" },
+  "tokens": [
+    {
+      "name": "response",
+      "type": "string",
+      "title": { "en": "Response" },
+      "example": { "en": "Response from Ollama" }
+    }
+  ],
+  "args": [
+    {
+        "type": "autocomplete",
+        "name": "model",
+        "title": { "en": "Model" },
+        "placeholder": { "en": "gpt-oss:20b" }
+    },
+    {
+      "type": "text",
+      "name": "prompt",
+      "title": { "en": "Prompt" },
+      "placeholder": { "en": "Hello, Ollama!" }
+    }
+  ]
+}

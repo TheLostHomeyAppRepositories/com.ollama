@@ -1,0 +1,1 @@
+Adds support for Ollama in Homey. Specify your Ollama instance IP and port in the app settings to use this app.
