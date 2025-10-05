@@ -1,6 +1,6 @@
 {
-  "title": { "en": "Generate response from Ollama using model ... and prompt ..." },
-  "titleFormatted": { "en": "Generate response from Ollama using model [[model]] and prompt [[prompt]]" },
+  "title": { "en": "Generate response using model ... and prompt ..." },
+  "titleFormatted": { "en": "Generate response using model [[model]] and prompt [[prompt]]" },
   "tokens": [
     {
       "name": "response",

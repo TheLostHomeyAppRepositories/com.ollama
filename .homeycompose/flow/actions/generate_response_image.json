@@ -1,6 +1,6 @@
 {
-  "title": { "en": "Generate response from Ollama using model ... and prompt ... with image ..." },
-  "titleFormatted": { "en": "Generate response from Ollama using model [[model]] and prompt [[prompt]] with image [[droptoken]]" },
+  "title": { "en": "Generate response using model ... and prompt ... with image ..." },
+  "titleFormatted": { "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]" },
   "droptoken": ["image"],
   "tokens": [
     {
