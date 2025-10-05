@@ -89,7 +89,6 @@ module.exports = class OllamaApp extends Homey.App {
           response: data.response
         };
       } catch (error) {
-        this.error('Error generating response from Ollama:', error);
         throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
       }
     });
@@ -109,11 +108,9 @@ module.exports = class OllamaApp extends Homey.App {
         const ollamaPort = await this.homey.settings.get('port');
         const systemPrompt = await this.homey.settings.get('systemPrompt');
         if (!systemPrompt) {
-          this.error('Please set a system prompt in the app settings.');
           throw new Error('Please set a system prompt in the app settings.');
         }
         if (!ollamaIp || !ollamaPort) {
-          this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
           throw new Error('Ollama IP or port not set in settings.');
         }
         const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
@@ -134,7 +131,6 @@ module.exports = class OllamaApp extends Homey.App {
           response: data.response
         };
       } catch (error) {
-        this.error('Error generating response from Ollama:', error);
         throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
       }
     });
