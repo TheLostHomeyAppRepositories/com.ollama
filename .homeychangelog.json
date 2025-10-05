@@ -4,5 +4,8 @@
   },
   "1.0.1": {
     "en": "Adds support for setting the system prompt via a Flow"
+  },
+  "1.0.2": {
+    "en": "Adds support for images"
   }
 }

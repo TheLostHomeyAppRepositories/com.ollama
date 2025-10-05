@@ -119,7 +119,6 @@ module.exports = class OllamaApp extends Homey.App {
         }
         const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
         const imageBase64 = await this.getImageBase64(args.droptoken);
-        console.log(imageBase64);
         const payload = {
           model: args.model.id,
           prompt: args.prompt,
