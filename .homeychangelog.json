@@ -16,5 +16,8 @@
   },
   "1.0.5": {
     "en": "Fixes error handling and app settings page"
+  },
+  "1.0.6": {
+    "en": "Decreased the length of the Flow card names"
   }
 }

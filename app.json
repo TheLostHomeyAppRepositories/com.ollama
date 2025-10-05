@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.ollama",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#000000",
@@ -36,10 +36,10 @@
     "actions": [
       {
         "title": {
-          "en": "Generate response from Ollama using model ... and prompt ..."
+          "en": "Generate response using model ... and prompt ..."
         },
         "titleFormatted": {
-          "en": "Generate response from Ollama using model [[model]] and prompt [[prompt]]"
+          "en": "Generate response using model [[model]] and prompt [[prompt]]"
         },
         "tokens": [
           {
@@ -79,10 +79,10 @@
       },
       {
         "title": {
-          "en": "Generate response from Ollama using model ... and prompt ... with image ..."
+          "en": "Generate response using model ... and prompt ... with image ..."
         },
         "titleFormatted": {
-          "en": "Generate response from Ollama using model [[model]] and prompt [[prompt]] with image [[droptoken]]"
+          "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]"
         },
         "droptoken": [
           "image"
