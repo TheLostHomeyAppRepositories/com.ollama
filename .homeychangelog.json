@@ -13,5 +13,8 @@
   },
   "1.0.4": {
     "en": "README improvements"
+  },
+  "1.0.5": {
+    "en": "Fixes error handling and app settings page"
   }
 }
