@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const axios = require('axios');
 
-module.exports = class MyApp extends Homey.App {
+module.exports = class OllamaApp extends Homey.App {
 
   /**
    * onInit is called when the app is initialized.
@@ -67,17 +67,17 @@ module.exports = class MyApp extends Homey.App {
         this.error('Error generating response from Ollama:', error);
         throw new Error('Error generating response from Ollama.');
       }
-    });  
-        setSystemPromptCard.registerRunListener(async (args, state) => {
-          try {
-            if (args.sysprompt) {
-              this.homey.settings.set('systemPrompt', args.sysprompt);
-              return true;
-            }
-          } catch (error) {
-            this.error('Error setting system prompt:', error);
-            throw new Error('Error setting system prompt.');
-          }
-        });
+    });
+    setSystemPromptCard.registerRunListener(async (args, state) => {
+      try {
+        if (args.sysprompt) {
+          this.homey.settings.set('systemPrompt', args.sysprompt);
+          return true;
+        }
+      } catch (error) {
+        this.error('Error setting system prompt:', error);
+        throw new Error('Error setting system prompt.');
+      }
+    });
   }
 };
