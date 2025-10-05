@@ -11,7 +11,7 @@
     "en": "Ollama"
   },
   "description": {
-    "en": "Adds support for Ollama"
+    "en": "Use Local LLMs in your Flows"
   },
   "category": [
     "internet"
