@@ -21,11 +21,11 @@ module.exports = class OllamaApp extends Homey.App {
           const ollamaPort = await this.homey.settings.get('port');
           if (!ollamaIp || !ollamaPort) {
             this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-            return [];
+            throw new Error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
           }
           const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
           const response = await axios.get(`${ollamaUrl}/api/tags`);
-          const data = await response.data;
+          const data = response.data;
           const results = data.models.map(m => ({
             name: m.model, // use only the model field
             id: m.model     // id can also be the model name
@@ -35,7 +35,7 @@ module.exports = class OllamaApp extends Homey.App {
           );
         } catch (error) {
           this.error('Error fetching models from Ollama:', error);
-          return [];
+          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
         }
     });
     generateResponseImageCard.registerArgumentAutocompleteListener(
@@ -46,11 +46,11 @@ module.exports = class OllamaApp extends Homey.App {
           const ollamaPort = await this.homey.settings.get('port');
           if (!ollamaIp || !ollamaPort) {
             this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-            return [];
+            throw new Error('Ollama IP or port not set in settings.');
           }
           const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
           const response = await axios.get(`${ollamaUrl}/api/tags`);
-          const data = await response.data;
+          const data = response.data;
           const results = data.models.map(m => ({
             name: m.model, // use only the model field
             id: m.model     // id can also be the model name
@@ -60,7 +60,7 @@ module.exports = class OllamaApp extends Homey.App {
           );
         } catch (error) {
           this.error('Error fetching models from Ollama:', error);
-          return [];
+          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
         }
     });
     generateResponseCard.registerRunListener(async (args, state) => {
@@ -70,6 +70,7 @@ module.exports = class OllamaApp extends Homey.App {
         const systemPrompt = await this.homey.settings.get('systemPrompt');
         if (!systemPrompt) {
           this.error('Please set a system prompt in the app settings.');
+          throw new Error('Please set a system prompt in the app settings.');
         }
         if (!ollamaIp || !ollamaPort) {
           this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
@@ -83,15 +84,13 @@ module.exports = class OllamaApp extends Homey.App {
           stream: false
         };
         const response = await axios.post(`${ollamaUrl}/api/generate`, payload);
-        const data = await response.data;
+        const data = response.data;
         return {
           response: data.response
         };
-      }
-      
-      catch (error) {
+      } catch (error) {
         this.error('Error generating response from Ollama:', error);
-        throw new Error('Error generating response from Ollama.');
+        throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
       }
     });
     setSystemPromptCard.registerRunListener(async (args, state) => {
@@ -101,8 +100,7 @@ module.exports = class OllamaApp extends Homey.App {
           return true;
         }
       } catch (error) {
-        this.error('Error setting system prompt:', error);
-        throw new Error('Error setting system prompt.');
+        throw new Error('Error setting system prompt: ' + error.message);
       }
     });
     generateResponseImageCard.registerRunListener(async (args, state) => {
@@ -112,12 +110,16 @@ module.exports = class OllamaApp extends Homey.App {
         const systemPrompt = await this.homey.settings.get('systemPrompt');
         if (!systemPrompt) {
           this.error('Please set a system prompt in the app settings.');
+          throw new Error('Please set a system prompt in the app settings.');
         }
         if (!ollamaIp || !ollamaPort) {
           this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
           throw new Error('Ollama IP or port not set in settings.');
         }
         const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+        if (!args.droptoken) {
+          throw new Error('Please provide an image.');
+        }
         const imageBase64 = await this.getImageBase64(args.droptoken);
         const payload = {
           model: args.model.id,
@@ -127,15 +129,13 @@ module.exports = class OllamaApp extends Homey.App {
           stream: false
         };
         const response = await axios.post(`${ollamaUrl}/api/generate`, payload);
-        const data = await response.data;
+        const data = response.data;
         return {
           response: data.response
         };
-      }
-      
-      catch (error) {
+      } catch (error) {
         this.error('Error generating response from Ollama:', error);
-        throw new Error('Error generating response from Ollama.');
+        throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
       }
     });
   }

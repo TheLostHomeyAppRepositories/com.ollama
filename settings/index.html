@@ -62,6 +62,7 @@
         });
 
         saveElement.addEventListener("click", function (e) {
+          successfulElement.style.display = 'none';
           saveElement.className = 'homey-button-primary-full is-loading';
           saveElement.textContent = 'Saving';
           Homey.set("ip", ipElement.value, function (err) {
