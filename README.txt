@@ -4,4 +4,4 @@ FEATURES:
 - Supports system prompt
 - Supports sending messages with images to vision models like qwen2.5vl
 
-For example, use a vision model like qwen2.5vl or gemma3 to check your camera snapshots or use a larger model like gpt-oss:20b for detailed responses
+For example, use a vision model like qwen2.5vl or gemma3 to check your camera snapshots or use a larger model like gpt-oss:20b for detailed responses.
