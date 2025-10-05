@@ -11,6 +11,7 @@ module.exports = class MyApp extends Homey.App {
   async onInit() {
     this.log('Ollama has been initialized');
     const generateResponseCard = this.homey.flow.getActionCard("generate_response");
+    const setSystemPromptCard = this.homey.flow.getActionCard("set_system_prompt");
     generateResponseCard.registerArgumentAutocompleteListener(
       "model",
       async (query, args) => {
@@ -67,5 +68,16 @@ module.exports = class MyApp extends Homey.App {
         throw new Error('Error generating response from Ollama.');
       }
     });  
+        setSystemPromptCard.registerRunListener(async (args, state) => {
+          try {
+            if (args.sysprompt) {
+              this.homey.settings.set('systemPrompt', args.sysprompt);
+              return true;
+            }
+          } catch (error) {
+            this.error('Error setting system prompt:', error);
+            throw new Error('Error setting system prompt.');
+          }
+        });
   }
 };

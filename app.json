@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.ollama",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#000000",
@@ -71,6 +71,24 @@
           }
         ],
         "id": "generate_response"
+      },
+      {
+        "title": {
+          "en": "Set system prompt to ..."
+        },
+        "titleFormatted": {
+          "en": "Set system prompt to [[sysprompt]]"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "sysprompt",
+            "title": {
+              "en": "System prompt"
+            }
+          }
+        ],
+        "id": "set_system_prompt"
       }
     ]
   }

@@ -1,0 +1,11 @@
+{
+  "title": { "en": "Set system prompt to ..." },
+  "titleFormatted": { "en": "Set system prompt to [[sysprompt]]" },
+  "args": [
+    {
+      "type": "text",
+      "name": "sysprompt",
+      "title": { "en": "System prompt" }
+    }
+  ]
+}
