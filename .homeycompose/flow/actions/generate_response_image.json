@@ -15,7 +15,7 @@
         "type": "autocomplete",
         "name": "model",
         "title": { "en": "Model" },
-        "placeholder": { "en": "gpt-oss:20b" }
+        "placeholder": { "en": "qwen2.5vl:3b" }
     },
     {
       "type": "text",
