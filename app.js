@@ -15,54 +15,10 @@ module.exports = class OllamaApp extends Homey.App {
     const setSystemPromptCard = this.homey.flow.getActionCard("set_system_prompt");
     generateResponseCard.registerArgumentAutocompleteListener(
       "model",
-      async (query, args) => {
-        try {
-          const ollamaIp = await this.homey.settings.get('ip');
-          const ollamaPort = await this.homey.settings.get('port');
-          if (!ollamaIp || !ollamaPort) {
-            this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-            throw new Error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-          }
-          const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
-          const response = await axios.get(`${ollamaUrl}/api/tags`);
-          const data = response.data;
-          const results = data.models.map(m => ({
-            name: m.model, // use only the model field
-            id: m.model     // id can also be the model name
-          }));
-          return results.filter(result =>
-            result.name.toLowerCase().includes(query.toLowerCase())
-          );
-        } catch (error) {
-          this.error('Error fetching models from Ollama:', error);
-          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
-        }
-    });
+      async (query, args) => this.autocompleteModel(query));
     generateResponseImageCard.registerArgumentAutocompleteListener(
       "model",
-      async (query, args) => {
-        try {
-          const ollamaIp = await this.homey.settings.get('ip');
-          const ollamaPort = await this.homey.settings.get('port');
-          if (!ollamaIp || !ollamaPort) {
-            this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-            throw new Error('Ollama IP or port not set in settings.');
-          }
-          const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
-          const response = await axios.get(`${ollamaUrl}/api/tags`);
-          const data = response.data;
-          const results = data.models.map(m => ({
-            name: m.model, // use only the model field
-            id: m.model     // id can also be the model name
-          }));
-          return results.filter(result =>
-            result.name.toLowerCase().includes(query.toLowerCase())
-          );
-        } catch (error) {
-          this.error('Error fetching models from Ollama:', error);
-          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
-        }
-    });
+      async (query, args) => this.autocompleteModel(query));
     generateResponseCard.registerRunListener(async (args, state) => {
       try {
         const ollamaIp = await this.homey.settings.get('ip');
@@ -147,5 +103,28 @@ module.exports = class OllamaApp extends Homey.App {
       });
       stream.on("error", reject);
     });
+  }
+  async autocompleteModel(query) {
+       try {
+          const ollamaIp = await this.homey.settings.get('ip');
+          const ollamaPort = await this.homey.settings.get('port');
+          if (!ollamaIp || !ollamaPort) {
+            this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
+            throw new Error('Ollama IP or port not set in settings.');
+          }
+          const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+          const response = await axios.get(`${ollamaUrl}/api/tags`);
+          const data = response.data;
+          const results = data.models.map(m => ({
+            name: m.model, // use only the model field
+            id: m.model     // id can also be the model name
+          }));
+          return results.filter(result =>
+            result.name.toLowerCase().includes(query.toLowerCase())
+          );
+        } catch (error) {
+          this.error('Error fetching models from Ollama:', error);
+          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
+        }
   }
 };
