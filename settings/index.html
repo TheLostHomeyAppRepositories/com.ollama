@@ -70,6 +70,11 @@
             saveElement.textContent = 'Save';
             return Homey.alert('Please enter the IP address of your Ollama instance.');
           }
+          if (!promptElement.value) {
+            saveElement.className = 'homey-button-primary-full';
+            saveElement.textContent = 'Save';
+            return Homey.alert('Please enter a system prompt.');
+          }
           Homey.set("ip", ipElement.value, function (err) {
             if (err) {
                 saveElement.className = 'homey-button-primary-full';
@@ -87,11 +92,6 @@
                return Homey.alert(err);
             }
           });
-          if (!promptElement.value) {
-            saveElement.className = 'homey-button-primary-full';
-            saveElement.textContent = 'Save';
-            return Homey.alert('Please enter a system prompt.');
-          }
           Homey.set("systemPrompt", promptElement.value, function (err) {
             if (err) {
                 saveElement.className = 'homey-button-primary-full';
