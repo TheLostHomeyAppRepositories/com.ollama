@@ -10,10 +10,12 @@
     "local"
   ],
   "name": {
-    "en": "Ollama"
+    "en": "Ollama",
+    "nl": "Ollama"
   },
   "description": {
-    "en": "Use Local LLMs in your Flows"
+    "en": "Use Local LLMs in your Flows",
+    "nl": "Gebruik lokale LLM's in je Flows"
   },
   "category": [
     "internet"

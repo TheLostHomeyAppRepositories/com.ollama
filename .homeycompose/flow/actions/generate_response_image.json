@@ -1,27 +1,51 @@
 {
-  "title": { "en": "Generate response using model ... and prompt ... with image ..." },
-  "titleFormatted": { "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]" },
+  "title": {
+    "en": "Generate response using model ... and prompt ... with image ...",
+    "nl": "Genereer antwoord met model ... en prompt ... met afbeelding ..."
+  },
+  "titleFormatted": {
+    "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]",
+    "nl": "Genereer antwoord met model [[model]] en prompt [[prompt]] met afbeelding [[droptoken]]"
+  },
   "droptoken": ["image"],
   "tokens": [
     {
       "name": "response",
       "type": "string",
-      "title": { "en": "Response" },
-      "example": { "en": "Response from Ollama" }
+      "title": {
+        "en": "Response",
+        "nl": "Antwoord"
+      },
+      "example": {
+        "en": "Response from Ollama",
+        "nl": "Antwoord van Ollama"
+      }
     }
   ],
   "args": [
     {
         "type": "autocomplete",
         "name": "model",
-        "title": { "en": "Model" },
-        "placeholder": { "en": "qwen2.5vl:3b" }
+        "title": {
+          "en": "Model",
+          "nl": "Model"
+        },
+        "placeholder": {
+          "en": "qwen2.5vl:3b",
+          "nl": "qwen2.5vl:3b"
+        }
     },
     {
       "type": "text",
       "name": "prompt",
-      "title": { "en": "Prompt" },
-      "placeholder": { "en": "Hello, Ollama!" }
+      "title": {
+        "en": "Prompt",
+        "nl": "Prompt"
+      },
+      "placeholder": {
+        "en": "Hello, Ollama!",
+        "nl": "Hallo, Ollama!"
+      }
     }
   ]
 }

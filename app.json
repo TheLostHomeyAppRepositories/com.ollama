@@ -11,10 +11,12 @@
     "local"
   ],
   "name": {
-    "en": "Ollama"
+    "en": "Ollama",
+    "nl": "Ollama"
   },
   "description": {
-    "en": "Use Local LLMs in your Flows"
+    "en": "Use Local LLMs in your Flows",
+    "nl": "Gebruik lokale LLM's in je Flows"
   },
   "category": [
     "internet"
@@ -36,20 +38,24 @@
     "actions": [
       {
         "title": {
-          "en": "Generate response using model ... and prompt ..."
+          "en": "Generate response using model ... and prompt ...",
+          "nl": "Genereer antwoord met model ... en prompt ..."
         },
         "titleFormatted": {
-          "en": "Generate response using model [[model]] and prompt [[prompt]]"
+          "en": "Generate response using model [[model]] and prompt [[prompt]]",
+          "nl": "Genereer antwoord met model [[model]] en prompt [[prompt]]"
         },
         "tokens": [
           {
             "name": "response",
             "type": "string",
             "title": {
-              "en": "Response"
+              "en": "Response",
+              "nl": "Antwoord"
             },
             "example": {
-              "en": "Response from Ollama"
+              "en": "Response from Ollama",
+              "nl": "Antwoord van Ollama"
             }
           }
         ],
@@ -58,20 +64,24 @@
             "type": "autocomplete",
             "name": "model",
             "title": {
-              "en": "Model"
+              "en": "Model",
+              "nl": "Model"
             },
             "placeholder": {
-              "en": "gpt-oss:20b"
+              "en": "gpt-oss:20b",
+              "nl": "gpt-oss:20b"
             }
           },
           {
             "type": "text",
             "name": "prompt",
             "title": {
-              "en": "Prompt"
+              "en": "Prompt",
+              "nl": "Prompt"
             },
             "placeholder": {
-              "en": "Hello, Ollama!"
+              "en": "Hello, Ollama!",
+              "nl": "Hallo, Ollama!"
             }
           }
         ],
@@ -79,10 +89,12 @@
       },
       {
         "title": {
-          "en": "Generate response using model ... and prompt ... with image ..."
+          "en": "Generate response using model ... and prompt ... with image ...",
+          "nl": "Genereer antwoord met model ... en prompt ... met afbeelding ..."
         },
         "titleFormatted": {
-          "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]"
+          "en": "Generate response using model [[model]] and prompt [[prompt]] with image [[droptoken]]",
+          "nl": "Genereer antwoord met model [[model]] en prompt [[prompt]] met afbeelding [[droptoken]]"
         },
         "droptoken": [
           "image"
@@ -92,10 +104,12 @@
             "name": "response",
             "type": "string",
             "title": {
-              "en": "Response"
+              "en": "Response",
+              "nl": "Antwoord"
             },
             "example": {
-              "en": "Response from Ollama"
+              "en": "Response from Ollama",
+              "nl": "Antwoord van Ollama"
             }
           }
         ],
@@ -104,20 +118,24 @@
             "type": "autocomplete",
             "name": "model",
             "title": {
-              "en": "Model"
+              "en": "Model",
+              "nl": "Model"
             },
             "placeholder": {
-              "en": "qwen2.5vl:3b"
+              "en": "qwen2.5vl:3b",
+              "nl": "qwen2.5vl:3b"
             }
           },
           {
             "type": "text",
             "name": "prompt",
             "title": {
-              "en": "Prompt"
+              "en": "Prompt",
+              "nl": "Prompt"
             },
             "placeholder": {
-              "en": "Hello, Ollama!"
+              "en": "Hello, Ollama!",
+              "nl": "Hallo, Ollama!"
             }
           }
         ],
@@ -125,17 +143,20 @@
       },
       {
         "title": {
-          "en": "Set system prompt to ..."
+          "en": "Set system prompt to ...",
+          "nl": "Stel systeemprompt in op ..."
         },
         "titleFormatted": {
-          "en": "Set system prompt to [[sysprompt]]"
+          "en": "Set system prompt to [[sysprompt]]",
+          "nl": "Stel systeemprompt in op [[sysprompt]]"
         },
         "args": [
           {
             "type": "text",
             "name": "sysprompt",
             "title": {
-              "en": "System prompt"
+              "en": "System prompt",
+              "nl": "Systeemprompt"
             }
           }
         ],

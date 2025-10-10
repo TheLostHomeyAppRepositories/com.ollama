@@ -75,6 +75,14 @@
             saveElement.textContent = 'Save';
             return Homey.alert('Please enter a system prompt.');
           }
+          if (!portElement.value) {
+            portElement.value = '11434';
+          }
+          if (portElement.value < 1 || portElement.value > 65535) {
+            saveElement.className = 'homey-button-primary-full';
+            saveElement.textContent = 'Save';
+            return Homey.alert('Please enter a valid port number (1-65535).');
+          }
           Homey.set("ip", ipElement.value, function (err) {
             if (err) {
                 saveElement.className = 'homey-button-primary-full';
@@ -82,9 +90,6 @@
                return Homey.alert(err);
             }
           });
-          if (!portElement.value) {
-            portElement.value = '11434';
-          }
           Homey.set("port", portElement.value, function (err) {
             if (err) {
                 saveElement.className = 'homey-button-primary-full';

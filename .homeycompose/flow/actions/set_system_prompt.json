@@ -1,11 +1,20 @@
 {
-  "title": { "en": "Set system prompt to ..." },
-  "titleFormatted": { "en": "Set system prompt to [[sysprompt]]" },
+  "title": {
+    "en": "Set system prompt to ...",
+    "nl": "Stel systeemprompt in op ..."
+  },
+  "titleFormatted": {
+    "en": "Set system prompt to [[sysprompt]]",
+    "nl": "Stel systeemprompt in op [[sysprompt]]"
+  },
   "args": [
     {
       "type": "text",
       "name": "sysprompt",
-      "title": { "en": "System prompt" }
+      "title": {
+        "en": "System prompt",
+        "nl": "Systeemprompt"
+      }
     }
   ]
 }

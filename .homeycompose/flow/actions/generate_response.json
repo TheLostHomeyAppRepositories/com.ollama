@@ -1,26 +1,50 @@
 {
-  "title": { "en": "Generate response using model ... and prompt ..." },
-  "titleFormatted": { "en": "Generate response using model [[model]] and prompt [[prompt]]" },
+  "title": {
+    "en": "Generate response using model ... and prompt ...",
+    "nl": "Genereer antwoord met model ... en prompt ..."
+  },
+  "titleFormatted": {
+    "en": "Generate response using model [[model]] and prompt [[prompt]]",
+    "nl": "Genereer antwoord met model [[model]] en prompt [[prompt]]"
+  },
   "tokens": [
     {
       "name": "response",
       "type": "string",
-      "title": { "en": "Response" },
-      "example": { "en": "Response from Ollama" }
+      "title": {
+        "en": "Response",
+        "nl": "Antwoord"
+      },
+      "example": {
+        "en": "Response from Ollama",
+        "nl": "Antwoord van Ollama"
+      }
     }
   ],
   "args": [
     {
         "type": "autocomplete",
         "name": "model",
-        "title": { "en": "Model" },
-        "placeholder": { "en": "gpt-oss:20b" }
+        "title": {
+          "en": "Model",
+          "nl": "Model"
+        },
+        "placeholder": {
+          "en": "gpt-oss:20b",
+          "nl": "gpt-oss:20b"
+        }
     },
     {
       "type": "text",
       "name": "prompt",
-      "title": { "en": "Prompt" },
-      "placeholder": { "en": "Hello, Ollama!" }
+      "title": {
+        "en": "Prompt" ,
+        "nl": "Prompt"
+      },
+      "placeholder": {
+        "en": "Hello, Ollama!",
+        "nl": "Hallo, Ollama!"
+      }
     }
   ]
 }
