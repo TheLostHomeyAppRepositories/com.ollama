@@ -1,4 +1,4 @@
-Voegt ondersteuning voor Ollama toe in Homey. Specificeer het IP-adres en de poort van je Ollama-instantie in de app-instellingen om deze app te gebruiken.
+Voegt ondersteuning voor Ollama toe in Homey. Specificeer het IP-adres en de poort van je Ollama-instance in de app-instellingen om deze app te gebruiken.
 
 FEATURES:
 - Ondersteunt systeemprompt
