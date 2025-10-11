@@ -1,1 +1,14 @@
-{}
+{
+    "settings": {
+        "header": "Ollama instance",
+        "ip": "IP address",
+        "port": "Port",
+        "sysprompt": "System prompt",
+        "save": "Save",
+        "saving": "Saving",
+        "success": "Settings saved!",
+        "iperror": "Please enter a valid IP address",
+        "porterror": "Please enter a valid port number (1-65535)",
+        "sysprompterror": "Please enter a system prompt"
+    }
+}

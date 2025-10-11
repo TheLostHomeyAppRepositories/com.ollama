@@ -7,39 +7,56 @@
       src="/homey.js"
       data-origin="settings"
     ></script>
+    <style>
+      .error {
+        color: red;
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <fieldset class="homey-form-fieldset">
-      <legend class="homey-form-legend">Ollama instance</legend>
+      <legend class="homey-form-legend" data-i18n="settings.header">Ollama instance</legend>
 
       <div class="homey-form-group">
-        <label class="homey-form-label" for="ip">IP address</label>
+        <label class="homey-form-label" for="ip" data-i18n="settings.ip">IP address</label>
         <input class="homey-form-input" id="ip" type="text" value="">
       </div>
+      <p class="error" id="iperror" data-i18n="settings.iperror">Please enter a valid IP address</p>
       <div class="homey-form-group">
-        <label class="homey-form-label" for="port">Port</label>
+        <label class="homey-form-label" for="port" data-i18n="settings.port">Port</label>
         <input class="homey-form-input" id="port" type="number" value="11434" placeholder="11434">
       </div>
+      <p class="error" id="porterror" data-i18n="settings.porterror">Please enter a valid port number (1-65535)</p>
       <div class="homey-form-group">
-        <label class="homey-form-label" for="prompt">System prompt</label>
+        <label class="homey-form-label" for="prompt" data-i18n="settings.sysprompt">System prompt</label>
         <textarea class="homey-form-textarea" id="prompt">You are an Assistant for Homey Pro. Users send messages and you should generate a response. Always respond friendly and give detailed responses.</textarea>
       </div>
+      <p class="error" id="prompterror" data-i18n="settings.prompterror">Please enter a system prompt</p>
     </fieldset>
-    <p style="color: green; display: none;" id="success">Settings saved!</p>
+    <p style="color: green; display: none;" id="success" data-i18n="settings.success">Settings saved!</p>
 
-    <button id="save" class="homey-button-primary-full">Save</button>
+    <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
 
     <script type="text/javascript">
       // a method named 'onHomeyReady' must be present in your code
       function onHomeyReady(Homey) {
         // Tell Homey we're ready to be displayed
         Homey.ready();
-
+        // Define default elements
         const ipElement = document.getElementById("ip");
         const portElement = document.getElementById("port");
         const promptElement = document.getElementById("prompt");
         const saveElement = document.getElementById("save");
         const successfulElement = document.getElementById("success");
+        // Define error elements
+        const ipErrorElement = document.getElementById("iperror");
+        const portErrorElement = document.getElementById("porterror");
+        const promptErrorElement = document.getElementById("prompterror");
+        // Hide error elements
+        ipErrorElement.style.display = 'none';
+        portErrorElement.style.display = 'none';
+        promptErrorElement.style.display = 'none';
 
         successfulElement.style.display = 'none';
 
@@ -60,51 +77,57 @@
           if (!systemPrompt) return;
           promptElement.value = systemPrompt;
         });
+        function setSave() {
+          saveElement.className = 'homey-button-primary-full';
+          saveElement.textContent = Homey.__('settings.save');
+        }
+        function setSaving() {
+          saveElement.className = 'homey-button-primary-full is-loading';
+          saveElement.textContent = Homey.__('settings.saving');
+        }
 
         saveElement.addEventListener("click", function (e) {
           successfulElement.style.display = 'none';
-          saveElement.className = 'homey-button-primary-full is-loading';
-          saveElement.textContent = 'Saving';
+          ipErrorElement.style.display = 'none';
+          portErrorElement.style.display = 'none';
+          promptErrorElement.style.display = 'none';
+          setSaving();
           if (!ipElement.value) {
-            saveElement.className = 'homey-button-primary-full';
-            saveElement.textContent = 'Save';
-            return Homey.alert('Please enter the IP address of your Ollama instance.');
+            setSave();
+            ipErrorElement.style.display = 'block';
+            return;
           }
           if (!promptElement.value) {
-            saveElement.className = 'homey-button-primary-full';
-            saveElement.textContent = 'Save';
-            return Homey.alert('Please enter a system prompt.');
+            setSave();
+            promptErrorElement.style.display = 'block';
+            return;
           }
           if (!portElement.value) {
             portElement.value = '11434';
           }
           if (portElement.value < 1 || portElement.value > 65535) {
-            saveElement.className = 'homey-button-primary-full';
-            saveElement.textContent = 'Save';
-            return Homey.alert('Please enter a valid port number (1-65535).');
+            setSave();
+            portErrorElement.style.display = 'block';
+            return;
           }
           Homey.set("ip", ipElement.value, function (err) {
             if (err) {
-                saveElement.className = 'homey-button-primary-full';
-                saveElement.textContent = 'Save';
-               return Homey.alert(err);
+                setSave();
+                return Homey.alert(err);
             }
           });
           Homey.set("port", portElement.value, function (err) {
             if (err) {
-                saveElement.className = 'homey-button-primary-full';
-                saveElement.textContent = 'Save';
-               return Homey.alert(err);
+                setSave();
+                return Homey.alert(err);
             }
           });
           Homey.set("systemPrompt", promptElement.value, function (err) {
             if (err) {
-                saveElement.className = 'homey-button-primary-full';
-                saveElement.textContent = 'Save';
-               return Homey.alert(err);
+                setSave();
+                return Homey.alert(err);
             }
-            saveElement.className = 'homey-button-primary-full';
-            saveElement.textContent = 'Save';
+            setSave();
             successfulElement.style.display = 'block';
           });
         });

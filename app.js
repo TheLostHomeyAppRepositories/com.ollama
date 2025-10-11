@@ -13,6 +13,14 @@ module.exports = class OllamaApp extends Homey.App {
     const generateResponseCard = this.homey.flow.getActionCard("generate_response");
     const generateResponseImageCard = this.homey.flow.getActionCard("generate_response_image");
     const setSystemPromptCard = this.homey.flow.getActionCard("set_system_prompt");
+    try {
+      const portNumber = await this.homey.settings.get('port');
+      if (portNumber && (portNumber < 1 || portNumber > 65535)) {
+        this.homey.settings.set('port', 11434);
+      }
+    } catch (error) {
+      this.error('Error validating port number in settings:', error);
+    }
     generateResponseCard.registerArgumentAutocompleteListener(
       "model",
       async (query, args) => this.autocompleteModel(query));
