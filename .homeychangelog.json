@@ -28,5 +28,8 @@
   },
   "1.0.9": {
     "en": "Improved autocomplete listeners"
+  },
+  "1.1.0": {
+    "en": "Added Dutch language, improved errors in the settings page and added a check for the port number range"
   }
 }
