@@ -34,5 +34,8 @@
   },
   "1.1.1": {
     "en": "Fixed a typo in the Dutch README"
+  },
+  "1.1.2": {
+    "en": "Fix error handling and update README"
   }
 }
