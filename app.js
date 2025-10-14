@@ -53,7 +53,7 @@ module.exports = class OllamaApp extends Homey.App {
           response: data.response
         };
       } catch (error) {
-        throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
+        throw new Error('Error generating response from Ollama: ' + error.message);
       }
     });
     setSystemPromptCard.registerRunListener(async (args, state) => {
@@ -95,7 +95,7 @@ module.exports = class OllamaApp extends Homey.App {
           response: data.response
         };
       } catch (error) {
-        throw new Error('Error generating response from Ollama. Have you set the URL, port and system prompt in the app settings?');
+        throw new Error('Error generating response from Ollama: ' + error.message);
       }
     });
   }
@@ -117,8 +117,7 @@ module.exports = class OllamaApp extends Homey.App {
           const ollamaIp = await this.homey.settings.get('ip');
           const ollamaPort = await this.homey.settings.get('port');
           if (!ollamaIp || !ollamaPort) {
-            this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
-            throw new Error('Ollama IP or port not set in settings.');
+            throw new Error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
           }
           const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
           const response = await axios.get(`${ollamaUrl}/api/tags`);
@@ -132,7 +131,7 @@ module.exports = class OllamaApp extends Homey.App {
           );
         } catch (error) {
           this.error('Error fetching models from Ollama:', error);
-          throw new Error('Error fetching models from Ollama. Have you set the URL, port and system prompt in the app settings?');
+          throw new Error('Error fetching models from Ollama: ' + error.message);
         }
   }
 };

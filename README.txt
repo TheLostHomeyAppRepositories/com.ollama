@@ -1,7 +1,7 @@
 Adds support for Ollama in Homey. Specify your Ollama instance IP and port in the app settings to use this app.
 
 FEATURES:
-- Supports system prompt
+- Supports system prompt.
 - Supports sending messages to text models.
 - Supports sending messages with images to vision models like qwen2.5vl
 
