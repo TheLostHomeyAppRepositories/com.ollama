@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- The '/homey.js' script must be included in your settings view to work -->
     <script
       type="text/javascript"
       src="/homey.js"
@@ -39,37 +38,29 @@
     <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
 
     <script type="text/javascript">
-      // a method named 'onHomeyReady' must be present in your code
       function onHomeyReady(Homey) {
-        // Define default elements
         const ipElement = document.getElementById("ip");
         const portElement = document.getElementById("port");
         const promptElement = document.getElementById("prompt");
         const saveElement = document.getElementById("save");
         const successfulElement = document.getElementById("success");
-        // Define error elements
         const ipErrorElement = document.getElementById("iperror");
         const portErrorElement = document.getElementById("porterror");
         const promptErrorElement = document.getElementById("prompterror");
-        // Hide error elements
         ipErrorElement.style.display = 'none';
         portErrorElement.style.display = 'none';
         promptErrorElement.style.display = 'none';
-
         successfulElement.style.display = 'none';
-
         Homey.get("ip", function (err, ip) {
           if (err) return Homey.alert(err);
           if (!ip) return;
           ipElement.value = ip;
         });
-
         Homey.get("port", function (err, port) {
           if (err) return Homey.alert(err);
           if (!port) return;
           portElement.value = port;
         });
-
         Homey.get("systemPrompt", function (err, systemPrompt) {
           if (err) return Homey.alert(err);
           if (!systemPrompt) return;
