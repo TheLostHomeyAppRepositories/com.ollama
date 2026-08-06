@@ -16,6 +16,10 @@
     "chat": {
       "method": "POST",
       "path": "/chat"
+    },
+    "setReasoning": {
+      "method": "POST",
+      "path": "/reasoning"
     }
   }
 }

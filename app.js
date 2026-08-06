@@ -49,7 +49,8 @@ module.exports = class OllamaApp extends Homey.App {
           model: args.model.id,
           prompt: args.prompt,
           system: systemPrompt || "You are an Assistant for Homey Pro. Users send messages and you should generate a response. Always respond friendly and give detailed responses.",
-          stream: false
+          stream: false,
+          think: false
         };
         const response = await axios.post(`${ollamaUrl}/api/generate`, payload);
         const data = response.data;
@@ -91,7 +92,8 @@ module.exports = class OllamaApp extends Homey.App {
           prompt: args.prompt,
           system: systemPrompt || "You are an Assistant for Homey Pro. Users send messages and you should generate a response. Always respond friendly and give detailed responses.",
           images: [imageBase64],
-          stream: false
+          stream: false,
+          think: false
         };
         const response = await axios.post(`${ollamaUrl}/api/generate`, payload);
         const data = response.data;
@@ -129,22 +131,20 @@ module.exports = class OllamaApp extends Homey.App {
     const response = await axios.get(`${ollamaUrl}/api/tags`);
     return response.data.models.map(m => ({ name: m.model, id: m.model }));
   }
+  setReasoningEnabled(enabled) {
+    this.reasoningEnabled = !!enabled;
+  }
   async streamChat(instanceId, messages) {
     const ollamaIp = await this.homey.settings.get('ip');
     const ollamaPort = await this.homey.settings.get('port');
     const systemPrompt = await this.homey.settings.get('systemPrompt');
-
     if (!ollamaIp || !ollamaPort) throw new Error('Ollama IP or port not configured.');
-
-    // Resolve model: prefer widget instance setting, fall back to last used or first available
     let model = null;
     try {
       const models = await this.getModels();
       if (models.length > 0) model = models[0].id;
     } catch (_) {}
-
     const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
-
     const payload = {
       model: model || 'llama3.2:latest',
       messages: [
@@ -155,31 +155,32 @@ module.exports = class OllamaApp extends Homey.App {
         ...messages,
       ],
       stream: true,
+      think: this.reasoningEnabled === true,
     };
-
     const response = await axios.post(`${ollamaUrl}/api/chat`, payload, {
       responseType: 'stream',
     });
-
-    // Emit start so the widget can show the bubble immediately
     await this.homey.api.realtime(`chat:start:${instanceId}`, {});
-
     let buffer = '';
-
+    let thinkingBuffer = '';
     await new Promise((resolve, reject) => {
       response.data.on('data', chunk => {
-        // Ollama streams newline-delimited JSON
         const lines = chunk.toString().split('\n').filter(Boolean);
         for (const line of lines) {
           try {
             const parsed = JSON.parse(line);
             const token = parsed?.message?.content ?? '';
+            const thinking = parsed?.message?.thinking ?? '';
+            if (thinking) {
+              thinkingBuffer += thinking;
+              this.homey.api.realtime(`chat:thinking:${instanceId}`, { thinking }).catch(() => {});
+            }
             if (token) {
               buffer += token;
               this.homey.api.realtime(`chat:token:${instanceId}`, { token }).catch(() => {});
             }
             if (parsed.done) {
-              this.homey.api.realtime(`chat:done:${instanceId}`, { fullText: buffer }).catch(() => {});
+              this.homey.api.realtime(`chat:done:${instanceId}`, { fullText: buffer, thinkingText: thinkingBuffer }).catch(() => {});
             }
           } catch (_) {}
         }
