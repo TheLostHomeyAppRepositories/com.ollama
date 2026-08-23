@@ -94,5 +94,8 @@
   },
   "1.2.4": {
     "en": "Added reasoning"
+  },
+  "1.2.5": {
+    "en": "Added protocol selector"
   }
 }
