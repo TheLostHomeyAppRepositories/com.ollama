@@ -19,6 +19,13 @@ module.exports = class OllamaApp extends Homey.App {
       if (portNumber && (portNumber < 1 || portNumber > 65535)) {
         this.homey.settings.set('port', 11434);
       }
+      const protocol = await this.homey.settings.get('protocol');
+      if (!protocol) {
+        this.homey.settings.set('protocol', 'http');
+      }
+      if (protocol !== 'http' && protocol !== 'https') {
+        this.homey.settings.set('protocol', 'http');
+      }
     } catch (error) {
       this.error('Error validating port number in settings:', error);
     }
@@ -35,6 +42,7 @@ module.exports = class OllamaApp extends Homey.App {
       try {
         const ollamaIp = await this.homey.settings.get('ip');
         const ollamaPort = await this.homey.settings.get('port');
+        const protocol = await this.homey.settings.get('protocol') || 'http';
         const systemPrompt = await this.homey.settings.get('systemPrompt');
         if (!systemPrompt) {
           this.error('Please set a system prompt in the app settings.');
@@ -44,7 +52,7 @@ module.exports = class OllamaApp extends Homey.App {
           this.error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
           throw new Error('Ollama IP or port not set in settings.');
         }
-        const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+        const ollamaUrl = `${protocol}://${ollamaIp}:${ollamaPort}`;
         const payload = {
           model: args.model.id,
           prompt: args.prompt,
@@ -76,13 +84,14 @@ module.exports = class OllamaApp extends Homey.App {
         const ollamaIp = await this.homey.settings.get('ip');
         const ollamaPort = await this.homey.settings.get('port');
         const systemPrompt = await this.homey.settings.get('systemPrompt');
+        const protocol = await this.homey.settings.get('protocol') || 'http';
         if (!systemPrompt) {
           throw new Error('Please set a system prompt in the app settings.');
         }
         if (!ollamaIp || !ollamaPort) {
           throw new Error('Ollama IP or port not set in settings.');
         }
-        const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+        const ollamaUrl = `${protocol}://${ollamaIp}:${ollamaPort}`;
         if (!args.droptoken) {
           throw new Error('Please provide an image.');
         }
@@ -126,8 +135,9 @@ module.exports = class OllamaApp extends Homey.App {
   async getModels() {
     const ollamaIp = await this.homey.settings.get('ip');
     const ollamaPort = await this.homey.settings.get('port');
+    const protocol = await this.homey.settings.get('protocol') || 'http';
     if (!ollamaIp || !ollamaPort) throw new Error('Ollama IP or port not configured.');
-    const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+    const ollamaUrl = `${protocol}://${ollamaIp}:${ollamaPort}`;
     const response = await axios.get(`${ollamaUrl}/api/tags`);
     return response.data.models.map(m => ({ name: m.model, id: m.model }));
   }
@@ -138,13 +148,14 @@ module.exports = class OllamaApp extends Homey.App {
     const ollamaIp = await this.homey.settings.get('ip');
     const ollamaPort = await this.homey.settings.get('port');
     const systemPrompt = await this.homey.settings.get('systemPrompt');
+    const protocol = await this.homey.settings.get('protocol') || 'http';
     if (!ollamaIp || !ollamaPort) throw new Error('Ollama IP or port not configured.');
     let model = null;
     try {
       const models = await this.getModels();
       if (models.length > 0) model = models[0].id;
     } catch (_) {}
-    const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+    const ollamaUrl = `${protocol}://${ollamaIp}:${ollamaPort}`;
     const payload = {
       model: model || 'llama3.2:latest',
       messages: [
@@ -206,10 +217,11 @@ module.exports = class OllamaApp extends Homey.App {
     try {
       const ollamaIp = await this.homey.settings.get('ip');
       const ollamaPort = await this.homey.settings.get('port');
+      const protocol = await this.homey.settings.get('protocol') || 'http';
       if (!ollamaIp || !ollamaPort) {
         throw new Error('Ollama IP or port not set in settings. Please visit the app settings to connect to your Ollama instance.');
       }
-      const ollamaUrl = `http://${ollamaIp}:${ollamaPort}`;
+      const ollamaUrl = `${protocol}://${ollamaIp}:${ollamaPort}`;
       const response = await axios.get(`${ollamaUrl}/api/tags`);
       const data = response.data;
       const results = data.models.map(m => ({

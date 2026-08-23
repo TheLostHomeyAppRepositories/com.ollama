@@ -9,6 +9,7 @@
         "success": "Instellingen opgeslagen!",
         "iperror": "Voer een geldig IP-adres in",
         "porterror": "Voer een geldige poort in (1-65535)",
-        "sysprompterror": "Voer een systeemprompt in"
+        "sysprompterror": "Voer een systeemprompt in",
+        "protocol": "Protocol"
     }
 }

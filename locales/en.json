@@ -9,6 +9,7 @@
         "success": "Settings saved!",
         "iperror": "Please enter a valid IP address",
         "porterror": "Please enter a valid port number (1-65535)",
-        "sysprompterror": "Please enter a system prompt"
+        "sysprompterror": "Please enter a system prompt",
+        "protocol": "Protocol"
     }
 }

@@ -18,6 +18,13 @@
       <legend class="homey-form-legend" data-i18n="settings.header">Ollama instance</legend>
 
       <div class="homey-form-group">
+        <label class="homey-form-label" for="protocol" data-i18n="settings.protocol">Protocol</label>
+        <select class="homey-form-select" id="protocol">
+          <option value="http">HTTP</option>
+          <option value="https">HTTPS</option>
+        </select>
+      </div>
+      <div class="homey-form-group">
         <label class="homey-form-label" for="ip" data-i18n="settings.ip">IP address</label>
         <input class="homey-form-input" id="ip" type="text" value="">
       </div>
@@ -42,6 +49,7 @@
         const ipElement = document.getElementById("ip");
         const portElement = document.getElementById("port");
         const promptElement = document.getElementById("prompt");
+        const protocolElement = document.getElementById("protocol");
         const saveElement = document.getElementById("save");
         const successfulElement = document.getElementById("success");
         const ipErrorElement = document.getElementById("iperror");
@@ -66,6 +74,10 @@
           if (!systemPrompt) return;
           promptElement.value = systemPrompt;
         });
+        Homey.get("protocol", function (err, protocol) {
+          if (err) return Homey.alert(err);
+          protocolElement.value = protocol || 'http';
+        });
         Homey.ready();
         function setSave() {
           saveElement.className = 'homey-button-primary-full';
@@ -73,6 +85,7 @@
           ipElement.disabled = false;
           portElement.disabled = false;
           promptElement.disabled = false;
+          protocolElement.disabled = false;
         }
         function setSaving() {
           saveElement.className = 'homey-button-primary-full is-loading';
@@ -80,6 +93,7 @@
           ipElement.disabled = true;
           portElement.disabled = true;
           promptElement.disabled = true;
+          protocolElement.disabled = true;
         }
 
         saveElement.addEventListener("click", function (e) {
@@ -101,6 +115,9 @@
           if (!portElement.value) {
             portElement.value = '11434';
           }
+          if (!protocolElement.value) {
+            protocolElement.value = 'http';
+          }
           if (portElement.value < 1 || portElement.value > 65535) {
             setSave();
             portErrorElement.style.display = 'block';
@@ -108,20 +125,28 @@
           }
           Homey.set("ip", ipElement.value, function (err) {
             if (err) {
-                setSave();
-                return Homey.alert(err);
+              setSave();
+              return Homey.alert(err);
             }
           });
           Homey.set("port", portElement.value, function (err) {
             if (err) {
-                setSave();
-                return Homey.alert(err);
+              setSave();
+              return Homey.alert(err);
             }
           });
           Homey.set("systemPrompt", promptElement.value, function (err) {
             if (err) {
-                setSave();
-                return Homey.alert(err);
+              setSave();
+              return Homey.alert(err);
+            }
+            setSave();
+            successfulElement.style.display = 'block';
+          });
+          Homey.set("protocol", protocolElement.value, function (err) {
+            if (err) {
+              setSave();
+              return Homey.alert(err);
             }
             setSave();
             successfulElement.style.display = 'block';
